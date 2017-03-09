@@ -3,6 +3,10 @@ and I'll show you a way to reverse it - we can do it by printing, or by various
 stacks, and by node swapping. */
 
 /*
+
+  Compile: gcc -o TreeReversal -g TreeReversal.c
+  Run ./TreeReversal
+
   going to put the github commands here since I am brain crippled.
 
   echo "# CSource-Binary-Tree" >> README.md
@@ -40,6 +44,24 @@ typedef struct {
   int level;
   void *next;
 } NODE;
+
+void reverseTree(BINARY_NODE *root)
+{
+
+  BINARY_NODE *tmp = NULL;
+  
+  if(NULL == root)
+    {
+      return;
+    }
+
+  reverseTree(root->left);
+  reverseTree(root->right);
+  
+  tmp = root->left;
+  root->left = root->right;
+  root->right = tmp;
+}
 
 void insertTreeNode(BINARY_NODE **root,BINARY_NODE *node)
 {
@@ -145,7 +167,22 @@ int main (int argc, char *argv[])
   printTreeInReverseOrder(head);
   printf("\n\n");
 
+#if 0
   printf("Print the Tree in Depth First: \n");
   printTreeInDepthFirstOrder(head);
   printf("\n\n");
+#endif
+
+printf("=============== Reverse the Tree Structure ===============\n\n");
+  
+  reverseTree(head);
+
+  printf("Print the Tree in Order:\n");
+  printTreeInOrder(head);
+  printf("\n\n");
+
+  printf("Print the Tree in Reverse Order:\n");
+  printTreeInReverseOrder(head);
+  printf("\n\n");
+  
 }
